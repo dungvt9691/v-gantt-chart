@@ -1,34 +1,33 @@
 <template>
-  <div class="gantt-blocks"
-       :style="{height:blockHeight+'px'}">
-    <div class="gantt-block gantt-block-top-space"
-         :style="{height:topSpace+'px'}">
-    </div>
-    <div class="gantt-block"
-         :style="blockStyle"
-         v-for="(data,index) in showDatas"
-         :key="dataKey?data[dataKey]:index">
-
+  <div class="gantt-blocks" :style="{height:blockHeight+'px'}">
+    <div class="gantt-block gantt-block-top-space" :style="{height:topSpace+'px'}"></div>
+    <div
+      class="gantt-block"
+      :style="blockStyle"
+      v-for="(data,index) in showDatas"
+      :key="dataKey?data[dataKey]:index"
+    >
       <template v-if="!customGenerateBlocks">
-        <div class="gantt-block-item"
-             v-for="(item,index) in concatArray(data)"
-             v-if="isInRenderingTimeRange(item.start)||isInRenderingTimeRange(item.end)"
-             :key="itemKey?item[itemKey]:index"
-             :style="{left:getPosition(item)+'px',width:getWidth(item)+'px'}">
-          <slot :data="data"
-                :item="item">
+        <div
+          class="gantt-block-item"
+          v-for="(item,index) in concatArray(data)"
+          :key="itemKey?item[itemKey]:index"
+          :style="{left:getPosition(item)+'px',width:getWidth(item)+'px'}"
+        >
+          <slot :data="data" :item="item">
             <div class="gantt-block-defaultBlock">need slot</div>
           </slot>
         </div>
       </template>
 
       <template v-else>
-        <slot :data="data"
-              :getPositonOffset="getPositonOffset"
-              :getWidthAbout2Times="getWidthAbout2Times"
-              :isInRenderingTimeRange="isInRenderingTimeRange">need slot</slot>
+        <slot
+          :data="data"
+          :getPositonOffset="getPositonOffset"
+          :getWidthAbout2Times="getWidthAbout2Times"
+          :isInRenderingTimeRange="isInRenderingTimeRange"
+        >need slot</slot>
       </template>
-
     </div>
   </div>
 </template>
@@ -114,7 +113,10 @@ export default {
       }
 
       let timeToMs = new Date(time).getTime();
-      if (startTimeOfRenderArea <= timeToMs && timeToMs <= endTimeOfRenderArea) {
+      if (
+        startTimeOfRenderArea <= timeToMs &&
+        timeToMs <= endTimeOfRenderArea
+      ) {
         return true;
       }
       return false;

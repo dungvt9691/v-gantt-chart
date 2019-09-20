@@ -1,18 +1,15 @@
 <template>
-  <div class="gantt-timeline"
-       :style="{'margin-left':-cellWidth/2+'px'}">
-    <div class="gantt-timeline-block"
-         v-for="(day,index) in getDays" :style="{width:getTimeScales(day).length*cellWidth+'px'}"
-         :key="index">
-      <div class="gantt-timeline-day "
-           :style="heightStyle">
-        {{day.format("MM/DD")}}</div>
-      <div class="gantt-timeline-scale "
-           :style="heightStyle">
-        <div :style="cellWidthStyle"
-             v-for="(hour,index) in getTimeScales(day)"
-             :key="index">
-          {{hour}}
+  <div class="gantt-timeline" :style="{'margin-left':-cellWidth/2+'px'}">
+    <div
+      class="gantt-timeline-block"
+      v-for="(day,index) in getDays"
+      :style="{width:getTimeScales(day).length*cellWidth+'px'}"
+      :key="index"
+    >
+      <div class="gantt-timeline-day" :style="heightStyle">{{day.format("MM/DD")}}</div>
+      <div class="gantt-timeline-scale" :style="heightStyle">
+        <div :style="cellWidthStyle" v-for="(hour,index) in getTimeScales(day)" :key="index">
+          <span>{{hour}}</span>
         </div>
       </div>
     </div>
@@ -135,9 +132,9 @@ export default {
           totalblock.push(a.format("HH"));
         } else {
           let time = a.format("HH:mm");
-          if ((time >= "09:00" && time <= "12:00") || (time >= "13:00" && time <= "18:00")) {
-            totalblock.push(time)
-          };
+          if (time >= "09:00" && time <= "18:00") {
+            totalblock.push(time);
+          }
         }
         a = a.add(scale, "minute");
       }
